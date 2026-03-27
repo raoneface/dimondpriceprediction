@@ -7,6 +7,7 @@ Requires-Dist: pandas
 Requires-Dist: numpy
 Requires-Dist: seaborn
 Requires-Dist: flask
+Requires-Dist: scikit-learn
 Dynamic: author
 Dynamic: author-email
 Dynamic: requires-dist

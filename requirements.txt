@@ -2,4 +2,7 @@ pandas
 numpy
 seaborn
 flask
+scikit-learn
+prometheus-client
+gunicorn
 -e .

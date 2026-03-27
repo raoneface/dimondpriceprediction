@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>💎 Predict Diamond Price</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .header {
+            text-align: center;
+            color: white;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header p {
+            font-size: 1em;
+            opacity: 0.9;
+        }
+
+        .form-container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.6s ease;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h3 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            color: #333;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 0.95em;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        select {
+            padding: 12px 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        input[type="text"]:focus,
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+        }
+
+        input[type="text"]::placeholder,
+        input[type="number"]::placeholder {
+            color: #aaa;
+        }
+
+        .info-box {
+            background: #f0f4ff;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9em;
+            color: #555;
+        }
+
+        .info-box strong {
+            color: #667eea;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        button {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        input[type="submit"] {
+            flex: 1;
+            padding: 14px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        input[type="submit"]:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.6);
+        }
+
+        .btn-reset {
+            background: #f5f5f5;
+            color: #333;
+            border: 2px solid #e0e0e0;
+        }
+
+        .btn-reset:hover {
+            background: #e8f0fe;
+            border-color: #667eea;
+            color: #667eea;
+        }
+
+        .btn-home {
+            background: #48bb78;
+            color: white;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 20px;
+            border-radius: 8px;
+            padding: 10px 15px;
+            font-size: 0.9em;
+        }
+
+        .btn-home:hover {
+            background: #38a169;
+        }
+
+        .result-container {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            margin-top: 30px;
+            display: none;
+            animation: slideDown 0.5s ease;
+        }
+
+        .result-container.show {
+            display: block;
+        }
+
+        .result-label {
+            font-size: 1.1em;
+            opacity: 0.95;
+            margin-bottom: 10px;
+        }
+
+        .result-price {
+            font-size: 3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .result-note {
+            font-size: 0.9em;
+            opacity: 0.85;
+        }
+
+        .specs-helper {
+            background: #fff9e6;
+            border: 2px solid #ffd700;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 20px;
+            font-size: 0.85em;
+            color: #666;
+        }
+
+        .specs-helper strong {
+            color: #d4a600;
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                padding: 25px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+
+            .result-price {
+                font-size: 2em;
+            }
+
+            .button-group {
+                flex-direction: column;
+            }
+        }
+
+        .clear {
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>💎 Diamond Price Predictor</h1>
+            <p>Enter diamond specifications to get instant price prediction</p>
+        </div>
+
+        <a href="/" class="btn-home">← Back to Home</a>
+
+        <div class="form-container">
+            <div class="info-box">
+                <strong>📊 Tip:</strong> Provide accurate diamond measurements for better price predictions. All measurements should be in millimeters.
+            </div>
+
+            <form method="POST">
+                <!-- Physical Dimensions -->
+                <div class="form-section">
+                    <h3>📏 Physical Dimensions</h3>
+                    
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="carat">Carat Weight *</label>
+                            <input type="number" id="carat" name="carat" step="0.01" min="0.1" max="5" placeholder="e.g., 0.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="depth">Depth (mm) *</label>
+                            <input type="number" id="depth" name="depth" step="0.1" min="30" max="80" placeholder="e.g., 61.5" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="table">Table % *</label>
+                            <input type="number" id="table" name="table" step="0.1" min="43" max="95" placeholder="e.g., 55" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="x">Length X (mm) *</label>
+                            <input type="number" id="x" name="x" step="0.01" min="0" max="15" placeholder="e.g., 5.05" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="y">Width Y (mm) *</label>
+                            <input type="number" id="y" name="y" step="0.01" min="0" max="15" placeholder="e.g., 5.10" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="z">Height Z (mm) *</label>
+                            <input type="number" id="z" name="z" step="0.01" min="0" max="10" placeholder="e.g., 3.15" required>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Diamond Quality -->
+                <div class="form-section">
+                    <h3>✨ Diamond Quality</h3>
+
+                    <div class="specs-helper">
+                        <strong>Cut Quality:</strong> Fair &lt; Good &lt; Very Good &lt; Premium &lt; Ideal<br>
+                        <strong>Color:</strong> D (best) to J (lowest) | 
+                        <strong>Clarity:</strong> I1 (lowest) to IF (best)
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="cut">Cut Quality *</label>
+                            <select id="cut" name="cut" required>
+                                <option value="">Select Cut Quality</option>
+                                <option value="Fair">Fair</option>
+                                <option value="Good">Good</option>
+                                <option value="Very Good">Very Good</option>
+                                <option value="Premium">Premium</option>
+                                <option value="Ideal">Ideal</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="color">Color *</label>
+                            <select id="color" name="color" required>
+                                <option value="">Select Color</option>
+                                <option value="D">D (Best)</option>
+                                <option value="E">E</option>
+                                <option value="F">F</option>
+                                <option value="G">G</option>
+                                <option value="H">H</option>
+                                <option value="I">I</option>
+                                <option value="J">J (Lowest)</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="clarity">Clarity *</label>
+                            <select id="clarity" name="clarity" required>
+                                <option value="">Select Clarity</option>
+                                <option value="I1">I1 (Lowest)</option>
+                                <option value="SI2">SI2</option>
+                                <option value="SI1">SI1</option>
+                                <option value="VS2">VS2</option>
+                                <option value="VS1">VS1</option>
+                                <option value="VVS2">VVS2</option>
+                                <option value="VVS1">VVS1</option>
+                                <option value="IF">IF (Best)</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="button-group">
+                    <input type="submit" value="🔮 Predict Price">
+                    <button type="reset" class="btn-reset">↻ Clear Form</button>
+                </div>
+            </form>
+
+            <!-- Result Display -->
+            {% if final_result %}
+            <div class="result-container show">
+                <div class="result-label">Estimated Diamond Price</div>
+                <div class="result-price">${{ final_result }}</div>
+                <div class="result-note">💎 Based on current market data and machine learning analysis</div>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
