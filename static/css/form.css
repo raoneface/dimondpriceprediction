@@ -212,6 +212,52 @@ input[type="submit"]:hover {
     opacity: 0.85;
 }
 
+.accuracy-panel {
+    background: #f9fbff;
+    border: 1px solid #dbe7ff;
+    border-radius: 12px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.accuracy-panel h3 {
+    color: #4f46e5;
+    margin-bottom: 14px;
+    font-size: 1.1em;
+}
+
+.accuracy-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.accuracy-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    background: #ffffff;
+    border-radius: 8px;
+    border: 1px solid #edf2ff;
+}
+
+.model-name {
+    color: #1f2937;
+    font-weight: 600;
+}
+
+.model-score {
+    color: #2563eb;
+    font-weight: 600;
+}
+
+.accuracy-empty {
+    color: #6b7280;
+    margin: 0;
+}
+
 .specs-helper {
     background: #fff9e6;
     border: 2px solid #ffd700;
@@ -285,6 +331,11 @@ input[type="submit"]:hover {
 
     .button-group {
         flex-direction: column;
+    }
+
+    .accuracy-item {
+        flex-direction: column;
+        align-items: flex-start;
     }
 }
 

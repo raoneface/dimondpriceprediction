@@ -130,6 +130,22 @@
                 <div class="result-note">💎 Based on current market data and machine learning analysis</div>
             </div>
             {% endif %}
+
+            <div class="accuracy-panel">
+                <h3>Model Accuracy (R2 Score)</h3>
+                {% if model_accuracies and model_accuracies|length > 0 %}
+                <div class="accuracy-list">
+                    {% for model in model_accuracies %}
+                    <div class="accuracy-item">
+                        <span class="model-name">{{ model.name }}</span>
+                        <span class="model-score">{{ model.r2_score }} ({{ model.accuracy_percent }}%)</span>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% else %}
+                <p class="accuracy-empty">Train the model first to see model-wise accuracy here.</p>
+                {% endif %}
+            </div>
         </div>
     </div>
 </body>

@@ -62,6 +62,23 @@
             </div>
         </div>
 
+        <div class="accuracy-panel">
+            <h2>Model Accuracy (R2 Score)</h2>
+            {% if model_accuracies and model_accuracies|length > 0 %}
+            <div class="accuracy-grid">
+                {% for model in model_accuracies %}
+                <div class="accuracy-card">
+                    <h3>{{ model.name }}</h3>
+                    <p>R2: {{ model.r2_score }}</p>
+                    <p class="accuracy-percent">{{ model.accuracy_percent }}%</p>
+                </div>
+                {% endfor %}
+            </div>
+            {% else %}
+            <p class="accuracy-empty">Train the model first to see model-wise accuracy here.</p>
+            {% endif %}
+        </div>
+
         <div class="footer">
             <p>💎 Diamond Price Predictor &copy; 2026 | Powered by Machine Learning | All rights reserved</p>
         </div>

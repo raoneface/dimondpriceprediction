@@ -8,6 +8,7 @@ Requires-Dist: numpy
 Requires-Dist: seaborn
 Requires-Dist: flask
 Requires-Dist: scikit-learn
+Requires-Dist: setuptools
 Dynamic: author
 Dynamic: author-email
 Dynamic: requires-dist

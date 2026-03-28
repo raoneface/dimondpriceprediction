@@ -111,6 +111,56 @@ body {
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
 }
 
+.accuracy-panel {
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 15px;
+    padding: 35px;
+    margin-top: 30px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.accuracy-panel h2 {
+    color: #667eea;
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-align: center;
+}
+
+.accuracy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 15px;
+}
+
+.accuracy-card {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 16px;
+    background: #f8faff;
+    text-align: center;
+}
+
+.accuracy-card h3 {
+    color: #374151;
+    margin-bottom: 8px;
+    font-size: 1.05em;
+}
+
+.accuracy-card p {
+    color: #4b5563;
+    margin: 4px 0;
+}
+
+.accuracy-percent {
+    font-weight: 700;
+    color: #2563eb;
+}
+
+.accuracy-empty {
+    color: #6b7280;
+    text-align: center;
+}
+
 .features h2 {
     color: #667eea;
     margin-bottom: 25px;
@@ -222,6 +272,10 @@ body {
     }
 
     .features-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .accuracy-grid {
         grid-template-columns: 1fr;
     }
 }

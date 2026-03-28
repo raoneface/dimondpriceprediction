@@ -1,5 +1,11 @@
 import os
 import sys
+
+# Ensure local project root is used before site-packages imports.
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
+
 from src.logger import logging
 from src.exception import CustomException
 import pandas as pd

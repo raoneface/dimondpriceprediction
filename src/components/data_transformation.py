@@ -20,7 +20,7 @@ from src.utils import save_object
 
 @dataclass
 class DataTransformationconfig:
-    preprocessor_obj_file_path=os.path.join('artifacts','preprocessor.pkl')
+    preprocessor_obj_file_path: str
 
 
 
@@ -28,7 +28,10 @@ class DataTransformationconfig:
 
 class DataTransformation:
     def __init__(self):
-        self.data_transformation_config=DataTransformationconfig()
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+        self.data_transformation_config = DataTransformationconfig(
+            preprocessor_obj_file_path=os.path.join(project_root, 'artifacts', 'preprocessor.pkl')
+        )
 
     def get_data_transformation_object(self):
          

@@ -7,15 +7,14 @@ import pandas as pd
 
 class PredictPipeline:
     def __init__(self):
-        pass
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+        self.preprocessor_path = os.path.join(project_root, 'artifacts', 'preprocessor.pkl')
+        self.model_path = os.path.join(project_root, 'artifacts', 'model.pkl')
 
     def predict(self,features):
         try:
-            preprocessor_path=os.path.join('artifacts','preprocessor.pkl')
-            model_path=os.path.join('artifacts','model.pkl')
-
-            preprocessor=load_object(preprocessor_path)
-            model=load_object(model_path)
+            preprocessor=load_object(self.preprocessor_path)
+            model=load_object(self.model_path)
 
             data_scaled=preprocessor.transform(features)
 

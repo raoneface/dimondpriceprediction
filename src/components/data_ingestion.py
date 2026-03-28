@@ -11,21 +11,29 @@ from dataclasses import dataclass
 
 @dataclass
 class DataIngestionConfig:
-    train_data_path: str = os.path.join('artifacts', 'train.csv')
-    test_data_path: str = os.path.join('artifacts', 'test.csv')
-    raw_data_path: str = os.path.join('artifacts', 'data.csv')
+    train_data_path: str
+    test_data_path: str
+    raw_data_path: str
+    source_data_path: str
 
 ## create a data ingestion class
 class DataIngestion:
 
     def __init__(self):
-        self.ingestion_config = DataIngestionConfig()
+        project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+        artifacts_dir = os.path.join(project_root, 'artifacts')
+        self.ingestion_config = DataIngestionConfig(
+            train_data_path=os.path.join(artifacts_dir, 'train.csv'),
+            test_data_path=os.path.join(artifacts_dir, 'test.csv'),
+            raw_data_path=os.path.join(artifacts_dir, 'data.csv'),
+            source_data_path=os.path.join(project_root, 'Notebooks', 'data', 'gemstone.csv')
+        )
 
     def initiate_data_ingestion(self):
         logging.info("Data Ingestion method starts")
 
         try:
-            df = pd.read_csv(os.path.join('Notebooks/data', 'gemstone.csv'))
+            df = pd.read_csv(self.ingestion_config.source_data_path)
             logging.info("Dataset read as pandas dataframe")
 
             os.makedirs(os.path.dirname(self.ingestion_config.train_data_path), exist_ok=True)
